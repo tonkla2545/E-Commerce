@@ -15,8 +15,12 @@ const userSchema = new mongoose.Schema({
     lastname:{
         type:String,
     },
+    image:{
+        type:String,
+        default: null
+    },
     birthday:{
-        type:Date,
+        type:String,
     },
     role:{
         type:String,

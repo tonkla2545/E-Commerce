@@ -23,6 +23,16 @@ class Vertify{
 
         return next()
     }
+
+    static redirect(req,res,next){
+        const token = req.session.token;
+        if(token){
+            return res.status(401).send("Logged in")
+            // return res.redirect('/home')
+        }
+        
+        next()
+    }
 }
 
 module.exports = Vertify

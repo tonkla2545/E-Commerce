@@ -1,5 +1,6 @@
 const User = require('../model/User/user')
 const UserDetail = require('../model/User/userDetail')
+const CredirCard = require('../model/User/creditCard')
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -35,17 +36,19 @@ class Users {
                         password: hash,
                         firstname: firstname,
                         lastname: lastname,
+                        image: null,
                         birthday: birthday,
                         role: "user"
-                    }).then((post) =>{
-                        return UserDetail.create({
-                            address: '',
-                            phoneNumber: '',
-                            U_Id: post._id
-                        }).then(() => {
-                            return post;
-                        });
                     })
+                    // .then((post) =>{
+                    //     return UserDetail.create({
+                    //         address: '',
+                    //         phoneNumber: '',
+                    //         U_Id: post._id
+                    //     }).then(() => {
+                    //         return post;
+                    //     });
+                    // })
                 }).then((user) =>{
                     const token = jwt.sign(
                         { user_id: user._id, email },
@@ -119,8 +122,12 @@ class Users {
             res.send("Logout")
         })
     }
-
+    
     static editProfile(req,res,next){
+        
+    }
+
+    static insertAddress(req,res,next){
         const {address,phoneNumber} = req.body
 
         const token = req.session.token
@@ -134,11 +141,107 @@ class Users {
 
                 const userId = new ObjectId(data.user_id);
 
-                UserDetail.findOneAndUpdate({U_Id : userId},{address:address,phoneNumber:phoneNumber}).then((post) =>{
+                UserDetail.create({address:address,phoneNumber:phoneNumber,U_Id:userId}).then((post) =>{
                     return res.json(post)
                 }).catch(err =>{
                     console.log(err)
                     next(err)
+                })
+            })
+        }
+    }
+
+    static editAddress(req,res,next){
+        const {A_Id,address,phoneNumber} = req.body
+
+        const token = req.session.token
+
+        if (token) {
+            jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
+                if (err) {
+                    console.error('Failed to verify token:', err);
+                    return res.redirect('/login');
+                }
+
+                const userId = new ObjectId(data.user_id);
+
+                UserDetail.findById({_id : A_Id}).then((match) =>{
+                    if(match){
+                        UserDetail.findOneAndUpdate({U_Id : userId},{address:address,phoneNumber:phoneNumber}).then((post) =>{
+                            return res.json(post)
+                        }).catch(err =>{
+                            console.log(err)
+                            next(err)
+                        })
+                    }else{
+                        res.status(404).send('Can not edit information')
+                        next()
+                    }
+                }).catch(err =>{
+                    console.log(err)
+                })
+            })
+        }
+    }
+
+    static insertCreditCard(req,res,next){
+        const {firstname,lastname,cardNumber,expDate,CVV,} = req.body
+
+        const token = req.session.token
+
+        if (token) {
+            jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
+                if (err) {
+                    console.error('Failed to verify token:', err);
+                    return res.redirect('/login');
+                }
+
+                const userId = new ObjectId(data.user_id);
+
+                bcrypt.hash(CVV, 10).then(hash =>{
+                    CredirCard.create({firstname:firstname,lastname:lastname,cardNumber:cardNumber,expDate:expDate,CVV:hash,U_Id:userId}).then((post) =>{
+                        return res.json(post)
+                    }).catch(err =>{
+                        console.log(err)
+                    })
+                }).catch(err =>{
+                    console.log(err)
+                })
+            })
+        }
+    }
+
+    static editCreditCard(req,res,next){
+        const {C_id,firstname,lastname,cardNumber,expDate,CVV,} = req.body
+
+        const token = req.session.token
+
+        if (token) {
+            jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
+                if (err) {
+                    console.error('Failed to verify token:', err);
+                    return res.redirect('/login');
+                }
+
+                const userId = new ObjectId(data.user_id);
+
+                CredirCard.findById({_id : C_id}).then((match) =>{
+                    if(match){
+                        bcrypt.hash(CVV, 10).then(hash =>{
+                            CredirCard.create({firstname:firstname,lastname:lastname,cardNumber:cardNumber,expDate:expDate,CVV:hash,U_Id:userId}).then((post) =>{
+                                return res.json(post)
+                            }).catch(err =>{
+                                console.log(err)
+                            })
+                        }).catch(err =>{
+                            console.log(err)
+                        })
+                    }else{
+                        res.status(404).send('Can not edit information')
+                        next()
+                    }
+                }).catch(err =>{
+                    console.log(err)
                 })
             })
         }
