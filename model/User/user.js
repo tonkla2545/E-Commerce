@@ -22,12 +22,12 @@ const userSchema = new mongoose.Schema({
     birthday:{
         type:String,
     },
+    sex:{
+        type:String,
+    },
     role:{
         type:String,
     },
-    // UD_Id:{
-    //     type: mongoose.Schema.Types.ObjectId
-    // },
     token:{
         type:String,
     }

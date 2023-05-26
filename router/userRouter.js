@@ -13,5 +13,6 @@ router.post('/insertAddress',auth.vertityToken ,userController.insertAddress)
 router.post('/editAddress',auth.vertityToken ,userController.editAddress)
 router.post('/insertCreditCard',auth.vertityToken,userController.insertCreditCard)
 router.post('/editCreditCard',auth.vertityToken ,userController.editCreditCard)
+router.post('/editProfile',auth.vertityToken ,userController.editProfile)
 
 module.exports = router

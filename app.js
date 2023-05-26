@@ -22,8 +22,11 @@ app.use("*", (req,res,next) =>{
     next()
 })
 
+
 const userRouter = require('./router/userRouter')
+const productRouter = require('./router/productRouter')
 
 app.use(userRouter)
+app.use(productRouter)
 
 module.exports = app
