@@ -1,10 +1,7 @@
 const mongoose = require('mongoose')
 
-const credirCardSchema = new mongoose.Schema({
-    firstname:{
-        type:String,
-    },
-    lastname:{
+const creditCardSchema = new mongoose.Schema({
+    name:{
         type:String,
     },
     cardNumber:{
@@ -21,4 +18,4 @@ const credirCardSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('CredirCard',credirCardSchema)
+module.exports = mongoose.model('CreditCard',creditCardSchema)

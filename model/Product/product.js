@@ -4,11 +4,14 @@ const productSchema = new mongoose.Schema({
     name:{
         type:String,
     },
-    price:{
+    brand:{
+        type:String,
+    },
+    priceUnit:{
         type:Number,
     },
     size:{
-        type:Object ,
+        type:Object,
     },
     category:{
         type:String,
@@ -22,6 +25,10 @@ const productSchema = new mongoose.Schema({
     description:{
         type:String,
     },
+    date:{
+        type:Date,
+        default: Date.now
+    }
 })
 
 module.exports = mongoose.model('Product',productSchema)

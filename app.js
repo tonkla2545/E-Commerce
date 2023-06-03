@@ -25,8 +25,10 @@ app.use("*", (req,res,next) =>{
 
 const userRouter = require('./router/userRouter')
 const productRouter = require('./router/productRouter')
+const pageRouter = require('./router/pageRouter')
 
 app.use(userRouter)
 app.use(productRouter)
+app.use(pageRouter)
 
 module.exports = app
