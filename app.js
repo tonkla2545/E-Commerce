@@ -17,8 +17,15 @@ app.use(flash())
 app.use(expressSession({
     secret: "node secret"
 }))
+
 app.use("*", (req,res,next) =>{
     logggedIn = req.session.userId
+    next()
+})
+
+app.use((req,res,next) =>{
+    res.header('Access-Control-Allow-Origin','*')
+    res.header('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept')
     next()
 })
 

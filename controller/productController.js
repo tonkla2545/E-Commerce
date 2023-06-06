@@ -51,7 +51,7 @@ class Products {
                 const { name, brand, price, size, category, sex, description } = req.body
                 const image = req.file ? req.file.filename : null
 
-                Product.create({ name, brand, priceUnit: price, size: size, category, sex, image, description, date: Date.now() }).then((post) => {
+                Product.create({ name, brand, priceUnit: price, size, category, sex, image, description, date: Date.now() }).then((post) => {
                     res.status(200).send(post)
                     // res.status(200).send(post.size[30])
                 }).catch(err => {

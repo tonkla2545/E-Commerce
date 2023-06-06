@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
         type:Number,
     },
     size:{
-        type:Object,
+        type:Array,
     },
     category:{
         type:String,
@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema({
         type:String,
     },
     image:{
-        type:String,
+        type:Array,
     },
     description:{
         type:String,
