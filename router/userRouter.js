@@ -5,7 +5,7 @@ const expressSession = require('express-session')
 const userController = require('../controller/userController')
 const auth = require('../middleware/auth')
 
-// router.get('/index',auth.vertityToken ,userController.index)
+router.get('/',userController.index)
 router.get('/logout',userController.logout)
 router.post('/signup',auth.redirect ,userController.signUp)
 router.post('/login',auth.redirect ,userController.logIn)

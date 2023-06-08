@@ -25,13 +25,9 @@ const { ObjectId } = require('mongodb')
 
 class Users {
 
-    // static index(req, res, next) {
-    //     User.find().then(user => {
-    //         res.json(user)
-    //     }).catch(err => {
-    //         next(err)
-    //     })
-    // }
+    static index(req, res, next) {
+        res.send("Hello world")
+    }
 
     static signUp(req, res, next) {
         const { email, password, Cpassword, firstname, lastname, birthday, sex } = req.body

@@ -7,7 +7,8 @@ const ejs = require('ejs')
 const mongoose = require('mongoose')
 const flash = require('connect-flash')
 const expressSession = require('express-session')
-
+const cors = require('cors')
+ 
 global.logggedIn = null
 
 
@@ -23,12 +24,13 @@ app.use("*", (req,res,next) =>{
     next()
 })
 
-app.use((req,res,next) =>{
-    res.header('Access-Control-Allow-Origin','*')
-    res.header('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept')
-    next()
-})
+// app.use((req,res,next) =>{
+//     res.header('Access-Control-Allow-Origin','*')
+//     res.header('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept')
+//     next()
+// })
 
+app.use(cors())
 
 const userRouter = require('./router/userRouter')
 const productRouter = require('./router/productRouter')

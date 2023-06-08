@@ -5,7 +5,7 @@ const expressSession = require('express-session')
 const pageController = require('../controller/pageController')
 const auth = require('../middleware/auth')
 
-router.get('/',pageController.index)
+// router.get('/',pageController.index)
 router.get('/home',auth.vertityToken ,pageController.home)
 router.get('/pageCart',auth.vertityToken ,pageController.pageCart)
 router.get('/item',pageController.item)
