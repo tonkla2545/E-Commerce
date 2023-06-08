@@ -13,17 +13,11 @@ const productSchema = new mongoose.Schema({
     size:{
         type:Array,
     },
-    category:{
-        type:String,
-    },
     sex:{
         type:String,
     },
     image:{
         type:Array,
-    },
-    description:{
-        type:String,
     },
     date:{
         type:Date,
