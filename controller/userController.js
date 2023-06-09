@@ -30,7 +30,7 @@ class Users {
     }
 
     static signUp(req, res, next) {
-        const { email, password, Cpassword, firstname, lastname, birthday, sex } = req.body
+        const { email, password, Cpassword, firstname, lastname, birthday} = req.body
 
         if (email && password && Cpassword && firstname && lastname && birthday) {
             if (password === Cpassword) {
