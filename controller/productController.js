@@ -53,7 +53,6 @@ class Products {
 
                 Product.create({ name, brand, priceUnit: price, size, sex, image, date: Date.now() }).then((post) => {
                     res.status(200).send(post)
-                    // res.status(200).send(post.size[30])
                 }).catch(err => {
                     res.status(400).send('Cannot update');
                     console.log(err);
@@ -96,7 +95,6 @@ class Products {
                     } else {
                         Product.findById(P_Id).then((product) => {
                             if (!product) {
-                                // throw new Error('Product not found');
                                 res.status(400).send('Product not found')
                             } else {
                                 const priceTotel = product.priceUnit * Quantity;
@@ -139,7 +137,6 @@ class Products {
 
                 Cart.findByIdAndDelete(C_Id).then((cart) => {
                     if (!cart) {
-                        // throw new Error('Product not found');
                         res.status(400).send('Product not found')
                     } else {
                         res.status(222).send('Delete successfully')

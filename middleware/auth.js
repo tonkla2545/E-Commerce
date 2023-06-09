@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const User = require('../model/User/user')
 
-const config = process.env
 
 class Vertify{
     
@@ -13,7 +12,7 @@ class Vertify{
         }
 
         try{
-            const decoded = jwt.verify(token,config.TOKEN_KEY)
+            const decoded = jwt.verify(token,process.env.TOKEN_KEY)
             req.user= decoded
         } catch(err){
             req.session.destroy(() =>{

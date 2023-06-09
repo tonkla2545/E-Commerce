@@ -28,15 +28,13 @@ class Page {
             jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
                 if (err) {
                     console.error('Failed to verify token:', err);
-                    return res.redirect('/login');
                 }
 
                 const userId = new ObjectId(data.user_id);
 
                 User.findById(userId).then((userData) => {
                     Product.find().then((product) => {
-                        // res.render('home', { product: product, userData: userData });
-                        res.status(200).send(product)
+                        res.status(200).send(product,userData)
                     }).catch(err => {
                         console.log(err);
                         res.status(500).send('Error fetching items');
@@ -63,7 +61,6 @@ class Page {
 
                 User.findById(userId).then((userData) => {
                     Product.findById(item_Id).then((item) => {
-                        // res.render('item', { item: item, userData: userData });
                         res.status(200).send(item)
                     }).catch(err => {
                         console.log(err);
@@ -86,13 +83,6 @@ class Page {
                 }
 
                 const userId = new ObjectId(data.user_id);
-
-                // User.findById(userId).then((userData) =>{
-                //     Favorlite.findOne({ U_Id: userId}).then((favorlite) =>{
-                //         // res.render('favorlite', { favorlite: favorlite, userData: userData });
-                //         res.status(200).send(favorlite)
-                //     })
-                // })
 
                 Favorlite.aggregate([
                     {
