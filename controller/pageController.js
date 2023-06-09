@@ -54,7 +54,6 @@ class Page {
             jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
                 if (err) {
                     console.error('Failed to verify token:', err);
-                    return res.redirect('/login');
                 }
 
                 const userId = new ObjectId(data.user_id);
