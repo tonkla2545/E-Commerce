@@ -58,7 +58,7 @@ class Users {
                         { expiresIn: "5m" }
                     )
                     user.token = token
-                    res.status(200).send(user)
+                    res.status(200).send("SignUp successfully")
                 }).catch((err) => {
                     req.flash('validationError', err.message); // Store the error message in flash
                 })
