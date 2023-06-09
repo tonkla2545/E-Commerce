@@ -36,7 +36,6 @@ class Users {
             if (password === Cpassword) {
                 User.findOne({ email }).then((oldEmail) => {
                     if (oldEmail) {
-                        // throw new Error("User already exists. Please login.")
                         return res.status(409).send("User already exists. Please login.")
                     } else {
                         return bcrypt.hash(password, 10)
@@ -60,15 +59,12 @@ class Users {
                     )
                     user.token = token
                     res.status(200).send(user)
-                    // return res.redirect('/login')
                 }).catch((err) => {
                     req.flash('validationError', err.message); // Store the error message in flash
-                    // return res.redirect('/register');
                 })
             } else {
                 console.log('Passwords do not match')
                 res.status(404).send('Passwords do not match')
-                // req.flash('validationError','Password is incorrect')
             }
         } else {
             console.log('Please enter all information.')
@@ -92,31 +88,23 @@ class Users {
                         req.session.regenerate((err) => {
                             if (err) {
                                 console.error('Failed to regenerate session:', err)
-                                // return res.redirect('/login')
                             }
                             req.session.token = token
                             console.log("Login successfully")
                             res.status(202).send(user)
-                            // res.redirect('/home')
                         })
                     } else {
                         console.log('Password is incorrect')
                         res.status(404).send('Password is incorrect')
-                        // req.flash('validationError','Password is incorrect')
-                        // res.redirect('/login')
                     }
                 })
             } else {
                 console.log('Not found Email')
                 res.status(404).send('Not found Email')
-                // req.flash('validationError','Not found Email')
-                // res.redirect('/login')
             }
         }).catch((err) => {
             console.log(err)
             res.status(404).send('Not found Email')
-            // req.flash('validationError','Not found Email')
-            // res.redirect('/login')
         })
     }
 
@@ -134,7 +122,6 @@ class Users {
             jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
                 if (err) {
                     console.error('Failed to verify token:', err);
-                    // return res.redirect('/login');
                 }
 
                 const userId = new ObjectId(data.user_id); //
@@ -142,7 +129,6 @@ class Users {
                 if (Npassword === CNpassword) {
                     User.findById(userId).then((user) => {
                         if (!user) {
-                            // req.flash('validationError', "User not found.");
                             res.status(400).send('User not found')
                         }
                         bcrypt.compare(Cpassword, user.password).then((CMatch) => {
@@ -157,28 +143,20 @@ class Users {
 
                                             User.findOneAndUpdate({ _id: userId }, { password: hashedPassword }, { new: true }).then((updateUser) => {
                                                 if (!updateUser) {
-                                                    // req.flash('validationError', "User not found.");
-                                                    // res.redirect('/changePass')
                                                     res.status(404).send('User not found');
                                                 }
-                                                // res.status(200).send('Change password successfully')
                                                 res.status(200).json(updateUser);
-                                                // res.redirect('/home')
                                             }).catch((err => {
                                                 next(err)
                                             }))
                                         })
                                     } else {
-                                        // req.flash('validationError', "รหัสผ่านนี้เป็นรหัสผ่านเดิม.");
-                                        // res.redirect('/changePass')
                                         res.status(400).send('รหัสผ่านนี้เป็นรหัสผ่านเดิม')
                                     }
                                 }).catch(err => {
                                     next(err)
                                 })
                             } else {
-                                // req.flash('validationError', "กรุณากรองรหัสผ่านให้ถูกต้อง.");
-                                // res.redirect('/changePass')
                                 res.status(400).send('รหัสผ่านนี้เป็นรหัสผ่านเดิม')
                             }
                         }).catch(err => {
@@ -189,8 +167,6 @@ class Users {
                         next(err)
                     })
                 } else {
-                    // req.flash('validationError', "รหัสผ่านไม่ตรงกัน.");
-                    // res.redirect('/changePass')
                     res.status(400).send('รหัสผ่านไม่ตรงกัน')
                 }
             }
@@ -276,7 +252,6 @@ class Users {
                 const userId = new ObjectId(data.user_id);
 
                 Address.findById(req.params.id).then((match) => {
-                    // Address.findById({ _id: A_Id }).then((match) => {
                     if (match) {
                         Address.findOneAndUpdate({ U_Id: userId }, { address: address, phoneNumber: phoneNumber }).then((post) => {
                             return res.json(post)
