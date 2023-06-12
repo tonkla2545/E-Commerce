@@ -32,6 +32,8 @@ app.use((req,res,next) =>{
 
 app.use(cors())
 
+app.use(express.static('public'))
+
 const userRouter = require('./router/userRouter')
 const productRouter = require('./router/productRouter')
 const pageRouter = require('./router/pageRouter')

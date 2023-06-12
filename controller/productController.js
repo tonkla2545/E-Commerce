@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
         cb(null, './public/image/product');
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '.jpg'); // Change file name to include timestamp
+        cb(null, '/public/image/product' + Date.now() + '.jpg'); // Change file name to include timestamp
     },
 });
 
@@ -48,10 +48,10 @@ class Products {
                 console.error('Error uploading image:', err);
                 res.status(500).json({ error: 'Error uploading image' });
             } else {
-                const { name, brand, price, size, category, sex, description } = req.body
+                const { name, brand, priceUnit, size, category, sex, description } = req.body
                 const image = req.file ? req.file.filename : null
 
-                Product.create({ name, brand, priceUnit: price, size, sex, image, date: Date.now() }).then((post) => {
+                Product.create({ name, brand, priceUnit: priceUnit, size, sex, image, date: Date.now() }).then((post) => {
                     res.status(200).send(post)
                 }).catch(err => {
                     res.status(400).send('Cannot update');
@@ -120,8 +120,8 @@ class Products {
     }
 
     static deleteCart(req, res, next) {
-        const C_Id = req.body
-        // const C_Id = new ObjectId(req.params.id)
+        // const C_Id = req.body
+        const C_Id = new ObjectId(req.params.id)
 
         const token = req.session.token
 

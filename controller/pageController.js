@@ -49,6 +49,7 @@ class Page {
 
     static item(req, res, next) {
         const item_Id = req.params.id
+        const token = req.session.token
 
         if (token) {
             jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
@@ -58,16 +59,11 @@ class Page {
 
                 const userId = new ObjectId(data.user_id);
 
-                User.findById(userId).then((userData) => {
-                    Product.findById(item_Id).then((item) => {
-                        res.status(200).send(item)
-                    }).catch(err => {
-                        console.log(err);
-                        res.status(500).send('Error fetching items');
-                    });
+                Product.findById(item_Id).then((item) => {
+                    res.status(200).send(item)
                 }).catch(err => {
                     console.log(err);
-                    res.status(500).send('Not found user');
+                    res.status(500).send('Error fetching items');
                 });
             })
         }
