@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
         cb(null, './public/image/product');
     },
     filename: function (req, file, cb) {
-        cb(null, '/public/image/product' + Date.now() + '.jpg'); // Change file name to include timestamp
+        cb(null, Date.now() + '.jpg'); // Change file name to include timestamp
     },
 });
 
