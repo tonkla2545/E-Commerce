@@ -49,24 +49,31 @@ class Page {
 
     static item(req, res, next) {
         const item_Id = req.params.id
-        const token = req.session.token
+        // const token = req.session.token
 
-        if (token) {
-            jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
-                if (err) {
-                    console.error('Failed to verify token:', err);
-                }
+        Product.findById(item_Id).then((item) => {
+            res.status(200).send(item)
+        }).catch(err => {
+            console.log(err);
+            res.status(500).send('Error fetching items');
+        });
 
-                const userId = new ObjectId(data.user_id);
+        // if (token) {
+        //     jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
+        //         if (err) {
+        //             console.error('Failed to verify token:', err);
+        //         }
 
-                Product.findById(item_Id).then((item) => {
-                    res.status(200).send(item)
-                }).catch(err => {
-                    console.log(err);
-                    res.status(500).send('Error fetching items');
-                });
-            })
-        }
+        //         const userId = new ObjectId(data.user_id);
+
+        //         Product.findById(item_Id).then((item) => {
+        //             res.status(200).send(item)
+        //         }).catch(err => {
+        //             console.log(err);
+        //             res.status(500).send('Error fetching items');
+        //         });
+        //     })
+        // }
     }
 
     static favorlite(req,res,next){
