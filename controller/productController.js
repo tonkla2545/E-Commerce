@@ -48,10 +48,10 @@ class Products {
                 console.error('Error uploading image:', err);
                 res.status(500).json({ error: 'Error uploading image' });
             } else {
-                const { name, brand, priceUnit, size, category, sex, description } = req.body
+                const { name, brand, priceUnit, size, sex } = req.body
                 const image = req.file ? req.file.filename : null
 
-                Product.create({ name, brand, priceUnit: priceUnit, size, sex, image, date: Date.now() }).then((post) => {
+                Product.create({ name, brand, priceUnit, size, sex, image, date: Date.now() }).then((post) => {
                     res.status(200).send(post)
                 }).catch(err => {
                     res.status(400).send('Cannot update');
